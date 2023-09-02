@@ -27,7 +27,7 @@ def aplicar_reglas_aut(t, regla):
                 break
     return t_n
 
-def automata_celular_elemental(regla = 30)
+def automata_celular_elemental(regla = 30):
     ancho = 1200
     largo = 500
     punto_medio = (ancho//2) + (ancho % 2)
