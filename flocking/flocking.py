@@ -9,14 +9,16 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import math
 import time
-import os   
 import imageio
+import os
+
 
 
 def grafica(ave):
-    plt.scatter(ave.posicion[0],ave.posicion[1], marker=ave.marker, s=40) 
-    
-    
+    plt.scatter(ave.posicion[0],ave.posicion[1], marker=ave.marker, c="black", s=40) 
+    plt.axis('off') 
+
+
 def distancia(a,b):
     return np.sqrt(np.sum((a-b)**2))
 
@@ -115,20 +117,21 @@ class ave:
         new_pos = (p_vel*vel + pos)% ancho
         
         """si se quiere poner bordes que repelen a los agentes"""
-        # new_pos = p_vel*vel + pos
-        # if new_pos[0] < 0 or new_pos[0] > ancho:
-        #     if new_pos[1] < 0 or new_pos[1] > largo:
-        #         self.velocidad = np.array([-vel[0], -vel[1]])
-        #         new_pos = p_vel*self.velocidad + pos
-        #         self.marker = self.update_marcador()
-        #     else:
-        #         self.velocidad = np.array([-vel[0], vel[1]])
-        #         new_pos = p_vel*self.velocidad + pos
-        #         self.marker = self.update_marcador()
-        # elif new_pos[1] < 0 or new_pos[1] > largo:
-        #     self.velocidad = np.array([vel[0], -vel[1]])
-        #     new_pos = p_vel*self.velocidad + pos
-        #     self.marker = self.update_marcador()
+        if bordes:
+            new_pos = p_vel*vel + pos
+            if new_pos[0] < 0 or new_pos[0] > ancho:
+                if new_pos[1] < 0 or new_pos[1] > largo:
+                    self.velocidad = np.array([-vel[0], -vel[1]])
+                    new_pos = p_vel*self.velocidad + pos
+                    self.marker = self.update_marcador()
+                else:
+                    self.velocidad = np.array([-vel[0], vel[1]])
+                    new_pos = p_vel*self.velocidad + pos
+                    self.marker = self.update_marcador()
+            elif new_pos[1] < 0 or new_pos[1] > largo:
+                self.velocidad = np.array([vel[0], -vel[1]])
+                new_pos = p_vel*self.velocidad + pos
+                self.marker = self.update_marcador()
         
         # guarda la posición
         self.posicion = new_pos
@@ -143,67 +146,74 @@ class ave:
         t._transform = t.get_transform().rotate_deg(np.sign(vel[1])*angulo)
         return t
 
-global ancho
-ancho = 40 # ancho pantalla
-largo = 40 # largo pantalla      
-n_nodos = 50 ## Numero de agentes, estable en 50, guardado 500
-d1 = 3 # distancia de alineación y cohesión
-d2 = 2 # distancia de separación
-bandada = crea_bandada(largo, ancho, n_nodos) #crea agentes
-
-"""grafica"""
-plt.ion()
-fig = plt.figure()
-fig.set_size_inches(18, 18)
-fig.set_dpi(300)
-plt.plot([]) 
-
-plt.clf()
-plt.title("Parvada")
-plt.xlim([0, ancho])
-plt.ylim([0, largo])
-
-time.sleep(1/24)
-#plt.scatter(100,50, marker=(3, 0, 0))
-
-for x in bandada:
-    plt.scatter(x.posicion[0],x.posicion[1], marker=x.marker, s=40) 
-
-# path = 'G:/Mi unidad/maestria/materias/TSAN II/tareas/tarea 5/imagenes' # para guardar
-fig.canvas.draw()
-fig.canvas.flush_events()
-for i in range(0, 1000):  
+def flock(path, d1 = 3, d2 = 2, n_nodos = 250, guardar=True, bordes = False):
+    global ancho, bordes
+    ancho = 40 # ancho pantalla
+    largo = 40 # largo pantalla      
+    # n_nodos = 250 ## Numero de agentes, estable en 50, guardado 500
+    # d1 = 3 # distancia de alineación y cohesión
+    # d2 = 2 # distancia de separación
+    bandada = crea_bandada(largo, ancho, n_nodos) #crea agentes
+    
+    """grafica"""
+    plt.ion()
+    fig = plt.figure()
+    fig.subplots_adjust(wspace=0, hspace=0, top=1, bottom=0)
+    fig.set_size_inches(18, 18)
+    fig.set_dpi(300)
+    plt.plot([]) 
     plt.clf()
-    
-    # t0 = time.time()
-    """encuentra los vecinos de cada agente"""
-    encuentra_vecinos(bandada, d1, d2)
-    # t1 = time.time()    
-    # total = t1-t0
-    # print('vecinos', total)
-    # t0 = time.time()
-    """actualiza posciiones"""
-    for x in bandada:
-        x.update_vel(ancho, largo)
-    # t1 = time.time()    
-    # total = t1-t0
-    # print('velocidades', total)
-    
-    # t0 = time.time()
-    """grafica (es la función que tarda más)"""
-    list(map(grafica, bandada))  
-
-    # t1 = time.time()
-    # total = t1-t0
-    # print('plot', total)
+    plt.axis('off')
     plt.xlim([0, ancho])
     plt.ylim([0, largo])
+    
+    
+    
+    time.sleep(1/24)
+    #plt.scatter(100,50, marker=(3, 0, 0))
+    
+    for x in bandada:
+        plt.scatter(x.posicion[0],x.posicion[1], marker=x.marker, c="black", s=40) 
+        plt.axis('off')
+            
+    
     fig.canvas.draw()
     fig.canvas.flush_events()
-    # plt.savefig(os.path.join(path, str(i)+'.png')) 
+    for i in range(0, 1000):  
+        plt.clf()
+        
+        # t0 = time.time()
+        """encuentra los vecinos de cada agente"""
+        encuentra_vecinos(bandada, d1, d2)
+        # t1 = time.time()    
+        # total = t1-t0
+        # print('vecinos', total)
+        # t0 = time.time()
+        """actualiza posciiones"""
+        for x in bandada:
+            x.update_vel(ancho, largo)
+        # t1 = time.time()    
+        # total = t1-t0
+        # print('velocidades', total)
+        
+        # t0 = time.time()
+        """grafica (es la función que tarda más)"""
+        list(map(grafica, bandada))  
     
-"""para guardar"""
-# with imageio.get_writer('flocking.gif', mode='I') as writer:
-#     for i in range(0, 1000):
-#         image = imageio.imread(os.path.join(path, str(i)+'.png'))
-#         writer.append_data(image)
+        # t1 = time.time()
+        # total = t1-t0
+        # print('plot', total)
+    
+        plt.xlim([0, ancho])
+        plt.ylim([0, largo])
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+        if guardar:
+            plt.savefig(os.path.join(path, str(i)+'.png')) 
+        
+    """para guardar"""
+    if guardar:
+        with imageio.get_writer('flocking.gif', mode='I') as writer:
+            for i in range(0, 1000):
+                image = imageio.imread(os.path.join(path, str(i)+'.png'))
+                writer.append_data(image)
