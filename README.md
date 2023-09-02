@@ -1,3 +1,3 @@
 # Tareas
-asdasd
-nose
+
+Compilación de tareas de redes
