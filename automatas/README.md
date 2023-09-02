@@ -1,4 +1,4 @@
-# Algoritmos Automátas celulares.
+# Algoritmos Autómatas celulares.
 
 ## automatas.py
 
@@ -9,7 +9,7 @@ Se requiere instalar los paquetes
 !pip install numpy
 ```
 
-Dentro de **"automatas.py"** podemos aplicar dos tipos de reglas para ejecutar automátas celulares.
+Dentro de **"automatas.py"** podemos aplicar dos tipos de reglas para ejecutar autómatas celulares.
 
 ```{python}
 Aut_Cell_2D(regla) # ejecutará el el juego de la vida según el valor de la regla
@@ -20,4 +20,22 @@ regla = 'solidificación Neumann' # Para ejecutar solidificación de Neumann.
 El programa abrirá una ventana con rejillas blancas. Cada que presionemos con el mouse un espacio, si se encuentra de color blanco se cambiará a negro y viceversa. Esto generará la condición inicial del juego.
 
 Luego se debe teclear la tecla *"ENTER"* para iniciar el juego con la condición inicial dispuesta y la regla señalada.
+
+## a_c_elemental.py
+
+Se requiere instalar los paquetes
+
+```{python}
+!pip install matplotlib
+!pip install numpy
+```
+
+Dentro de **"a_c_elemental.py"** podemos aplicar las 256 reglas posibles de los autómatas celulares elementales con la función
+
+```{python}
+automata_celular_elemental(n) # ejecutará la n-ésima regla de los autómatas celulares elementales
+''' n un número entre 0 y 255. Por default (si no elegimos n), se aplicará la regla 30 '''
+```
+
+Se graficará el resultado de la regla aplicada.
 
