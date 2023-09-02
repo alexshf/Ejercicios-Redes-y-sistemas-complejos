@@ -1,5 +1,7 @@
 # Algoritmos Automátas celulares.
 
+## automatas.py
+
 Se requiere instalar los paquetes
 
 ```{python}
