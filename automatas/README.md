@@ -55,5 +55,4 @@ Dentro de ***codificar_decodificar_imagen.py*** encontramos un programa que codi
 codificar(imagen) # codifica y decodifica la imagen guardando el resultado en un archivo imagen_salida.png
 ''' imagen = ruta de la imagen a codificar'''
 ```
-
-
+![Ejemplo codificación-decodificación de imagen.](https://github.com/alexshf/Ejercicios-Redes-y-sistemas-complejos/blob/main/automatas/imagen_salida.png)
