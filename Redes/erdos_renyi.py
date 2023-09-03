@@ -98,7 +98,7 @@ def Erdos_Renyi_graph(guardar=True, path=None, n=30)
     nodos = np.arange(0, n) # etiquetamos nodos con números
     G.add_nodes_from(nodos) # Agregamos nodos a la red
     
-    '''Agregamos aristas aleatoriamente'''
+    # Agregamos aristas aleatoriamente
     
     comb = list(combinations(nodos, 2)) # todas las posibles de aristas
     total_comb = len(comb)
@@ -120,8 +120,6 @@ def Erdos_Renyi_graph(guardar=True, path=None, n=30)
     [distr, binom] = distribucion_grado(n, indices_edges)
     x = np.arange(1, n)
     
-    
-    path = 'G:/Mi unidad/maestria/materias/Redes y sistemas complejos/tareas/imagenes' # para guardar
     fig = plt.figure(figsize=(10, 10))
     repeticiones = 2000
     m_G = [len(indices_edges)]
