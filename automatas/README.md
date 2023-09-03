@@ -12,7 +12,7 @@ Se requiere instalar los paquetes
 Dentro de ***automatas.py*** podemos aplicar dos tipos de reglas para ejecutar autómatas celulares.
 
 ```{python}
-Aut_Cell_2D(regla) # ejecutará el el juego de la vida según el valor de la regla
+Aut_Cell_2D(regla) # ejecutará el juego de la vida según el valor de la regla
 regla = 'juego de la vida' # Para el juego de la vida
 regla = 'solidificación Neumann' # Para ejecutar solidificación de Neumann.
 ```
