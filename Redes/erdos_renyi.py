@@ -89,7 +89,7 @@ def proceso_markov_montecarlo(indices_edges):
     
     return indices_edges
 
-def Erdos_Renyi_graph(guardar=True, path=None, n=30)
+def Erdos_Renyi_graph(guardar=False, path=None, n=30)
 # n - nodos
 
     M_adyacencia =  np.zeros((n, n), dtype=int) # matriz de adyacencia sin aristas
