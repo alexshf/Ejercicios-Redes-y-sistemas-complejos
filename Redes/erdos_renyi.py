@@ -98,7 +98,8 @@ def Erdos_Renyi_graph(guardar=True, path=None, n=30)
     nodos = np.arange(0, n) # etiquetamos nodos con números
     G.add_nodes_from(nodos) # Agregamos nodos a la red
     
-    """Agregamos aristas aleatoriamente"""
+    '''Agregamos aristas aleatoriamente'''
+    
     comb = list(combinations(nodos, 2)) # todas las posibles de aristas
     total_comb = len(comb)
     N = np.random.randint(0, total_comb, dtype=int) # cantidad de aristas iniciales
